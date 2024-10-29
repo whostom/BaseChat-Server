@@ -2,7 +2,7 @@ const db = require('./DbConnection')
 
 function RequestMessages(loggedUserId, fromId) {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM messages WHERE (receiver_id = ? and author_id = ? OR (receiver_id = ? and author_id = ?) ORDER BY message_id DESC;'
+        const query = 'select * from messages where (receiver_id = ? and author_id = ? or (receiver_id = ? and author_id = ?) order by message_id desc;'
 
         db.query(query, [loggedUserId, fromId, fromId, loggedUserId], (err, results) => {
             if (err) {
