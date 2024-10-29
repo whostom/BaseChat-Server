@@ -1,10 +1,14 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+
+const Database = require('./Database')
+
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
-const Database = require('./Database')
+
+
 const io = new Server(server, {
     cors: {
         origin: "*",
