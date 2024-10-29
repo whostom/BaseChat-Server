@@ -8,13 +8,11 @@ function RegisterUser(login, pass, email) {
         db.query(checkQuery, [login, email], (err, results) => {
             if (err) {
                 console.error('Error checking user existence:', err.message)
-                reject(err)
-                return
+                return reject(err)
             }
 
             if (results.length > 0) {
-                reject(new Error('User with this login or email already exists.'))
-                return
+                return reject(new Error('User with this login or email already exists.'))
             }
 
             const insertQuery = 'INSERT INTO `users` (`user_id`, `login`, `pass`, `email`) VALUES (NULL, ?, ?, ?)'
@@ -23,8 +21,7 @@ function RegisterUser(login, pass, email) {
             db.query(insertQuery, [login, hash, email], (err, results) => {
                 if (err) {
                     console.error('Error adding user:', err.message)
-                    reject(err)
-                    return
+                    return reject(err)
                 }
                 console.log('User added successfully:', results.insertId)
                 resolve(results)
