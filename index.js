@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-    console.log('User connected')
+    console.log('User connected:', socket.id)
 
     socket.on('register-user', ({ username, password, email }) => {
         Database.RegisterUser(username, password, email)
@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
 
     socket.on('request-user-list', ({ loggedUser }) => {
         Database.RequestUserList(loggedUser)
-            .then((result) => {
+            .then((result) => { //it might send [], so check that on client side
                 socket.emit('request-user-list-success', result)
             })
             .catch(err => {
@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
 
     socket.on('request-messages', ({ loggedUser, fromId }) => {
         Database.RequestMessages(loggedUser, fromId)
-            .then((result) => {
+            .then((result) => { //it might send [], so check that on client side
                 socket.emit('request-messages-success', result)
             })
             .catch(err => {
