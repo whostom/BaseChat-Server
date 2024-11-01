@@ -22,20 +22,20 @@ io.on('connection', (socket) => {
     socket.on('register-user', ({ username, password, email }) => {
         Database.RegisterUser(username, password, email)
             .then(() => {
-                socket.emit('login-success', 'User login success')
+                socket.emit('register-success', 'User login success')
             })
             .catch(() => {
-                socket.emit('login-failure', 'User login failure')
+                socket.emit('register-failure', 'User login failure')
             })
     })
 
     socket.on('login-user', ({ username, password, email }) => {
-        Database.RegisterUser(username, password, email)
+        Database.LoginUser(username, password, email)
             .then(() => {
-                socket.emit('register-success', 'User added successfully')
+                socket.emit('login-success', 'User added successfully')
             })
             .catch(() => {
-                socket.emit('register-failure', 'Error adding user')
+                socket.emit('login-failure', 'Error adding user')
             })
     })
 
