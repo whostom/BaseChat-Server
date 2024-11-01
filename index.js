@@ -31,8 +31,8 @@ io.on('connection', (socket) => {
 
     socket.on('login-user', ({ username, hashedPassword, email }) => {
         Database.LoginUser(username, hashedPassword, email)
-            .then(() => {
-                socket.emit('login-success', 'User login success')
+            .then(({user, token}) => {
+                socket.emit('login-success', {user, token})
             })
             .catch(() => {
                 socket.emit('login-failure', 'User login failure')

@@ -19,7 +19,7 @@ function LoginUser(username, hashedPassword, email) {
             }
             const user = results[0]
             const token = jwt.sign({ id: user.user_id, login: user.login }, secretKey, { expiresIn: '1h' })
-            console.log('User found and successfuly logged:', user)
+            console.log('User' + user.login + 'found and successfuly logged')
             resolve({user, token})
         })
     })
