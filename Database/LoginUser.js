@@ -1,4 +1,6 @@
 const db = require('./DbConnection')
+const jwt = require('jsonwebtoken')
+const secretKey = 'g@Pb*VFbC8r#p$'
 
 function LoginUser(username, hashedPassword, email) {
     return new Promise((resolve, reject) => {
@@ -15,8 +17,10 @@ function LoginUser(username, hashedPassword, email) {
                 reject(new Error('No user found with provided credentials'))
                 return
             }
-            console.log('User found and successfuly logged:', results[0])
-            resolve(results[0])
+            const user = results[0]
+            const token = jwt.sign({ id: user.user_id, login: user.login }, secretKey, { expiresIn: '1h' })
+            console.log('User found and successfuly logged:', user)
+            resolve({user, token})
         })
     })
 }
