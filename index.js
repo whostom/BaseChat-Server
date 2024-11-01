@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
     console.log('User connected:', socket.id)
 
     socket.on('register-user', ({ username, password, email }) => {
-        Database.RegisterUser(username, password, email)
+        Database.LoginUser(username, password, email)
             .then(() => {
                 socket.emit('login-success', 'User login success')
             })
