@@ -3,35 +3,24 @@ const { v4: uuid } = require('uuid')
 
 function SendMessage(loggedUserId, content, attachment, receiverId) {
     return new Promise((resolve, reject) => {
-        if (attachment == null) {
-            const query = 'INSERT INTO `messages` (`message_id`, `content`, `attachment`, `receiver_id`, `author_id`) VALUES (\'\', ?, ?, \'\', ?);'
+        const fileName = attachment ? uuid() : '';
+        const query = 'INSERT INTO `messages` (`content`, `attachment`, `receiver_id`, `author_id`) VALUES (?, ?, ?, ?);';
 
-            db.query(query, [content, receiverId, loggedUserId], (err, results) => {
-                if (err) {
-                    console.error('Error sending message:', err.message)
-                    reject(err)
-                    return
-                }
-                console.log('Message sent successfully:', results)
-                resolve(results)
-            })
+        if (attachment) {
+            SaveImg(attachment);
         }
-        else{
-            SaveImg(attachment)
-            const query = 'INSERT INTO `messages` (`content`, `attachment`, `receiver_id`, `author_id`) VALUES (?, ?, ?, ?);'
-            const fileName = uuid()
-            db.query(query, [content, fileName, receiverId, loggedUserId], (err, results) => {
-                if (err) {
-                    console.error('Error sending message:', err.message)
-                    reject(err)
-                    return
-                }
-                console.log('Message sent successfully:', results)
-                resolve(results)
-            })
-        }
-    })
+
+        db.query(query, [content, fileName, receiverId, loggedUserId], (err, results) => {
+            if (err) {
+                console.error('Error sending message:', err.message);
+                return reject(err);
+            }
+            console.log('Message sent successfully:', results);
+            resolve(results);
+        });
+    });
 }
+
 
 module.exports = { SendMessage }
 
