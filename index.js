@@ -8,6 +8,7 @@ const Database = require('./Database')
 const onlineUsers = new Map();
 
 const io = new Server(server, {
+    maxHttpBufferSize: 1e8,
     cors: {
         origin: "*",
         methods: ["GET", "POST"],
@@ -66,8 +67,8 @@ io.on('connection', (socket) => {
             })
     })
 
-    socket.on('send-message', ({ loggedUser, content, receiverId }) => {
-        Database.SendMessage(loggedUser, content, receiverId)
+    socket.on('send-message', ({ loggedUser, content, receiverId, attachment}) => {
+        Database.SendMessage(loggedUser, content, receiverId, attachment)
             .then((result) => {
                 socket.emit('send-message-success', result)
             })

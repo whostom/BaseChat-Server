@@ -5,11 +5,13 @@ const fs = require('fs')
 
 function SendMessage(loggedUserId, content, receiverId, attachment) {
     return new Promise((resolve, reject) => {
-        const fileName = attachment ? uuid() : '';
+        let fileName = attachment ? uuid() : '';
         const query = 'INSERT INTO `messages` (`attachment`, `content`, `receiver_id`, `author_id`) VALUES (?, ?, ?, ?);'
 
+        console.log("attachment: ", attachment)
         if (attachment) {
             fileName += attachment.type
+            console.log("filename:",fileName)
             SaveImg(attachment.content,fileName)
         }
 
@@ -28,16 +30,10 @@ function SendMessage(loggedUserId, content, receiverId, attachment) {
 module.exports = { SendMessage }
 
 function SaveImg(base64Data, fileName) { //"lekko inspirowane" kochaną stroną stackoverflow
-    const filePath = path.join(__dirname, 'uploads', fileName)
+    const filePath = path.join('./uploads', fileName);
 
-    const matches = base64Data.match(/^data:(.+);base64,(.+)$/)
-    if (!matches) {
-        throw new Error('Invalid Base64 string')
-    }
+    const buffer = Buffer.from(base64Data, 'base64');
 
-    const fileData = matches[2]
-    const buffer = Buffer.from(fileData, 'base64')
-
-    fs.writeFileSync(filePath, buffer)
-    console.log('File saved:', filePath)
+    fs.writeFileSync(filePath, buffer);
+    console.log('File saved:', filePath);
 }
