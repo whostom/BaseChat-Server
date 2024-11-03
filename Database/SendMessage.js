@@ -9,7 +9,8 @@ function SendMessage(loggedUserId, content, receiverId, attachment) {
         const query = 'INSERT INTO `messages` (`attachment`, `content`, `receiver_id`, `author_id`) VALUES (?, ?, ?, ?);'
 
         if (attachment) {
-            SaveImg(attachment,fileName);
+            fileName += attachment.type
+            SaveImg(attachment.content,fileName)
         }
 
         db.query(query, [fileName, content, receiverId, loggedUserId], (err, results) => {
