@@ -1,16 +1,18 @@
 const db = require('./DbConnection')
 const { v4: uuid } = require('uuid')
+const path = require('path')
+const fs = require('fs')
 
-function SendMessage(loggedUserId, content, attachment, receiverId) {
+function SendMessage(loggedUserId, content, receiverId, attachment) {
     return new Promise((resolve, reject) => {
         const fileName = attachment ? uuid() : '';
-        const query = 'INSERT INTO `messages` (`content`, `attachment`, `receiver_id`, `author_id`) VALUES (?, ?, ?, ?);';
+        const query = 'INSERT INTO `messages` (`attachment`, `content`, `receiver_id`, `author_id`) VALUES (?, ?, ?, ?);'
 
         if (attachment) {
-            SaveImg(attachment);
+            SaveImg(attachment,fileName);
         }
 
-        db.query(query, [content, fileName, receiverId, loggedUserId], (err, results) => {
+        db.query(query, [fileName, content, receiverId, loggedUserId], (err, results) => {
             if (err) {
                 console.error('Error sending message:', err.message);
                 return reject(err);
