@@ -5,6 +5,8 @@ const server = http.createServer(app)
 const { Server } = require('socket.io')
 const Database = require('./Database')
 
+const onlineUsers = new Map();
+
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -31,8 +33,9 @@ io.on('connection', (socket) => {
 
     socket.on('login-user', ({ username, hashedPassword, email }) => {
         Database.LoginUser(username, hashedPassword, email)
-            .then(({user, token}) => {
-                socket.emit('login-success', {user, token})
+            .then(({ user, token }) => {
+                socket.emit('login-success', { user, token })
+                console.log('User logged in:', user.user_id, socket.id)
             })
             .catch(() => {
                 socket.emit('login-failure', 'User login failure')
@@ -42,6 +45,8 @@ io.on('connection', (socket) => {
     socket.on('request-user-list', ({ loggedUser }) => {
         Database.RequestUserList(loggedUser)
             .then((result) => { //it might send [], so check that on client side
+                onlineUsers.set(loggedUser, socket.id);
+                console.log(onlineUsers)
                 socket.emit('request-user-list-success', result)
             })
             .catch(err => {
@@ -70,10 +75,40 @@ io.on('connection', (socket) => {
                 console.error('Error sending message:', err)
                 socket.emit('send-message-error', 'Failed to send message')
             })
+
+
+        const senderSocketId = onlineUsers.get(loggedUser)
+        const receiverSocketId = onlineUsers.get(receiverId)
+        console.log(onlineUsers)
+
+        console.log("Sender socket:", senderSocketId)
+        console.log("Receiver socket:", receiverSocketId)
+
+        Database.RequestMessages(loggedUser, receiverId)
+            .then((result) => {
+                if (senderSocketId) {
+                    io.to(senderSocketId).emit('new-message', { data: result });
+                }
+
+                if (receiverSocketId) {
+                    io.to(receiverSocketId).emit('new-message', { data: result });
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching messages:', err);
+            })
+
     })
 
     socket.on('disconnect', () => {
         console.log('User disconnected')
+
+        for (const [userId, socketId] of onlineUsers.entries()) {
+            if (socketId === socket.id) {
+                onlineUsers.delete(userId);
+                break;
+            }
+        }
     })
 })
 
