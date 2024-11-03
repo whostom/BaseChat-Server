@@ -2,7 +2,7 @@ const db = require('./DbConnection')
 
 function SendMessage(loggedUserId, content, receiverId) {
     return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO `messages` (`message_id`, `content`, `receiver_id`, `author_id`) VALUES (\'\', ?, ?, ?);'
+        const query = 'INSERT INTO `messages` (`content`, `receiver_id`, `author_id`) VALUES (?, ?, ?);'
 
         db.query(query, [content, receiverId, loggedUserId], (err, results) => {
             if (err) {

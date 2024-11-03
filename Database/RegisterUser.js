@@ -15,7 +15,7 @@ function RegisterUser(login, pass, email) {
                 return reject(new Error('User with this login or email already exists.'))
             }
 
-            const insertQuery = 'INSERT INTO `users` (`user_id`, `login`, `pass`, `email`) VALUES (NULL, ?, ?, ?)'
+            const insertQuery = 'INSERT INTO `users` (`login`, `pass`, `email`) VALUES (?, ?, ?)'
             const hash = crypto.createHash('sha256').update(pass).digest('hex')
 
             db.query(insertQuery, [login, hash, email], (err, results) => {
