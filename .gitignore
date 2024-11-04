@@ -132,3 +132,7 @@ dist
 # Mac related files
 **/.DS_Store
 **/.DS_Store.meta
+
+# Uploaded files
+/uploads/*
+!/uploads/.gitkeep

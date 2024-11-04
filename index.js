@@ -4,6 +4,8 @@ const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const Database = require('./Database')
+const path = require('path')
+const cors = require('cors')
 
 const onlineUsers = new Map();
 
@@ -14,7 +16,8 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
     }
 })
-
+app.use(cors())
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/', (req, res) => {
     res.send("test endpoint")
 })
