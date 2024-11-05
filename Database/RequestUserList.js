@@ -10,6 +10,15 @@ function RequestUserList(loggedUserId) {
                 return reject(err)
             }
 
+            results.forEach(result => {
+                if (result.profile) {
+                    result.profile = `http://localhost:3000/uploads/profiles/${result.attachment}`
+                }
+                else {
+                    result.profile = `http://localhost:3000/uploads/profiles/default.png`
+                }
+            })
+
             console.log('Users read successfully:', results)
             resolve(results)
         })

@@ -4,6 +4,7 @@ const { RequestMessages } = require('./RequestMessages')
 const { RequestUserList } = require('./RequestUserList')
 const { SendMessage } = require('./SendMessage')
 const { LoginUser } = require('./LoginUser')
+const { UpdateProfile } = require('./UpdateProfile')
 
 module.exports = {
     db,
@@ -12,4 +13,5 @@ module.exports = {
     RequestMessages,
     RequestUserList,
     SendMessage,
+    UpdateProfile
 }

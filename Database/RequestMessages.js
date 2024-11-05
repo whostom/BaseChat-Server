@@ -12,7 +12,7 @@ function RequestMessages(loggedUserId, fromId) {
 
             results.forEach(result => {
                 if (result.attachment) {
-                    result.attachment = `http://localhost:3000/uploads/${result.attachment}`//fetch on client
+                    result.attachment = `http://localhost:3000/uploads/media/${result.attachment}`
                 }
             })
 

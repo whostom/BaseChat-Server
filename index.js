@@ -49,19 +49,27 @@ io.on('connection', (socket) => {
     socket.on('request-user-list', ({ loggedUser }) => {
         Database.RequestUserList(loggedUser)
             .then((result) => { //it might send [], so check that on client side
-                onlineUsers.set(loggedUser, socket.id);
-                console.log(onlineUsers)
+                onlineUsers.set(loggedUser, socket.id)
                 socket.emit('request-user-list-success', result)
             })
             .catch(err => {
-                console.error('Error fetching user list:', err)
                 socket.emit('request-user-list-error', 'Failed to fetch user list')
+            })
+    })
+
+    socket.on('update-profile', ({ loggedUser, profilePicture}) => {
+        Database.RequestUserList(loggedUser, profilePicture)
+            .then((result) => {
+                socket.emit('update-profile-success', result)
+            })
+            .catch(err => {
+                socket.emit('update-profile-error', 'Failed to update profile')
             })
     })
 
     socket.on('request-messages', ({ loggedUser, fromId }) => {
         Database.RequestMessages(loggedUser, fromId)
-            .then((result) => { //it might send [], so check that on client side
+            .then((result) => {
                 socket.emit('request-messages-success', result)
             })
             .catch(err => {

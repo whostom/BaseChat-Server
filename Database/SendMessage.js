@@ -1,7 +1,6 @@
 const db = require('./DbConnection')
 const { v4: uuid } = require('uuid')
-const path = require('path')
-const fs = require('fs')
+const saveImg = require('./SaveImg')
 
 function SendMessage(loggedUserId, content, receiverId, attachment) {
     return new Promise((resolve, reject) => {
@@ -12,7 +11,7 @@ function SendMessage(loggedUserId, content, receiverId, attachment) {
         if (attachment) {
             fileName += attachment.type
             console.log("filename:",fileName)
-            SaveImg(attachment.content,fileName)
+            saveImg.SaveImg(attachment.content,fileName)
         }
 
         db.query(query, [fileName, content, receiverId, loggedUserId], (err, results) => {
@@ -28,12 +27,3 @@ function SendMessage(loggedUserId, content, receiverId, attachment) {
 
 
 module.exports = { SendMessage }
-
-function SaveImg(base64Data, fileName) { //"lekko inspirowane" kochaną stroną stackoverflow
-    const filePath = path.join('./uploads', fileName);
-
-    const buffer = Buffer.from(base64Data, 'base64');
-
-    fs.writeFileSync(filePath, buffer);
-    console.log('File saved:', filePath);
-}
