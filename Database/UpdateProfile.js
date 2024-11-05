@@ -9,7 +9,7 @@ function UpdateProfile(loggedUserId, profilePicture) {
 
         if (attachment) {
             fileName += profilePicture.type
-            saveImg.SaveImg(profilePicture.content,fileName)
+            saveImg.SaveImg(profilePicture.content,'/profiles/' + fileName)
         }
 
         db.query(query, [fileName, loggedUserId], (err, results) => {
