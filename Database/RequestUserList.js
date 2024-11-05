@@ -2,7 +2,7 @@ const db = require('./DbConnection')
 
 function RequestUserList(loggedUserId) {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT user_id, login FROM users WHERE user_id != ?'
+        const query = 'SELECT user_id, login, profile FROM users WHERE user_id != ?'
 
         db.query(query, [loggedUserId], (err, results) => {
             if (err) {
@@ -11,8 +11,9 @@ function RequestUserList(loggedUserId) {
             }
 
             results.forEach(result => {
+                console.log(result)
                 if (result.profile) {
-                    result.profile = `http://localhost:3000/uploads/profiles/${result.attachment}`
+                    result.profile = `http://localhost:3000/uploads/profiles/${result.profile}`
                 }
                 else {
                     result.profile = `http://localhost:3000/uploads/profiles/default.png`
