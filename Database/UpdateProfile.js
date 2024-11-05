@@ -18,7 +18,7 @@ function UpdateProfile(loggedUserId, profilePicture) {
                 return reject(err);
             }
             console.log('Profile changed successfully:', results);
-            resolve(results);
+            resolve("http://localhost:3000/uploads/profiles/"  + fileName);
         });
     });
 }
