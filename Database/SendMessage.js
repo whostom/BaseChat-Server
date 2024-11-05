@@ -11,7 +11,7 @@ function SendMessage(loggedUserId, content, receiverId, attachment) {
         if (attachment) {
             fileName += attachment.type
             console.log("filename:",fileName)
-            saveImg.SaveImg(attachment.content,'/media/' + fileName)
+            saveImg.SaveImg(attachment.content,'/attachments/' + fileName)
         }
 
         db.query(query, [fileName, content, receiverId, loggedUserId], (err, results) => {

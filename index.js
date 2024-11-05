@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
 
     socket.on('request-user-list', ({ loggedUser }) => {
         Database.RequestUserList(loggedUser)
-            .then((result) => { //it might send [], so check that on client side
+            .then((result) => {
                 onlineUsers.set(loggedUser, socket.id)
                 socket.emit('request-user-list-success', result)
             })

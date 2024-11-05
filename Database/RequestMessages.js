@@ -12,11 +12,11 @@ function RequestMessages(loggedUserId, fromId) {
 
             results.forEach(result => {
                 if (result.attachment) {
-                    result.attachment = `http://localhost:3000/uploads/media/${result.attachment}`
+                    result.attachment = `http://localhost:3000/uploads/attachments/${result.attachment}`
                 }
             })
 
-            console.log('Messages read successfully:', results)
+            //console.log('Messages read successfully:', results)
             resolve(results)
         })
     })

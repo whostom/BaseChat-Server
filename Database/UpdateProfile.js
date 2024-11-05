@@ -5,9 +5,9 @@ const saveImg = require('./SaveImg')
 function UpdateProfile(loggedUserId, profilePicture) {
     return new Promise((resolve, reject) => {
         let fileName = profilePicture ? uuid() : '';
-        const query = 'UPDATE users SET profile = ? WHERE userId = ?'
+        const query = 'UPDATE users SET profile = ? WHERE user_id = ?'
 
-        if (attachment) {
+        if (profilePicture) {
             fileName += profilePicture.type
             saveImg.SaveImg(profilePicture.content,'/profiles/' + fileName)
         }
