@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('update-profile', ({ loggedUser, profilePicture}) => {
-        Database.RequestUserList(loggedUser, profilePicture)
+        Database.UpdateProfile(loggedUser, profilePicture)
             .then((result) => {
                 socket.emit('update-profile-success', result)
             })
