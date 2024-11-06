@@ -2,9 +2,9 @@ const db = require('./DbConnection')
 
 function RequestUserList(loggedUserId) {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT user_id, login, profile FROM users WHERE user_id != ?'
+        const query = 'SELECT user_id, login, profile FROM users'
 
-        db.query(query, [loggedUserId], (err, results) => {
+        db.query(query, [], (err, results) => {
             if (err) {
                 console.error('Error reading user list:', err.message)
                 return reject(err)
