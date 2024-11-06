@@ -1,4 +1,4 @@
-# WebChat - Serwer
+# BaseChat - Serwer
 
 Serwer WebChat to backendowa część aplikacji WebChat, zbudowana w technologii Node.js i Express. Serwer obsługuje komunikację w czasie rzeczywistym, autoryzację użytkowników, zarządzanie danymi oraz integrację z bazą danych.
 
