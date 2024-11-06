@@ -133,6 +133,11 @@ dist
 **/.DS_Store
 **/.DS_Store.meta
 
-# Uploaded files
-/uploads/*
-!/uploads/.gitkeep
+# Ignore everything inside the uploads folder and its subfolders
+uploads/**
+uploads/*
+
+# Allow the uploads, media, and attachments folders themselves
+!uploads/
+!uploads/media/
+!uploads/attachments/
