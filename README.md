@@ -5,7 +5,7 @@ Serwer WebChat to backendowa część aplikacji WebChat, zbudowana w technologii
 ## Funkcjonalności
 
 - **WebSockety**: Obsługa komunikacji w czasie rzeczywistym przy użyciu `socket.io` dla płynnej wymiany wiadomości między użytkownikami.
-- **Integracja z bazą danych**: Przechowywanie danych użytkowników, wiadomości i innych zasobów w bazie danych MySQL lub MongoDB.
+- **Integracja z bazą danych**: Przechowywanie danych użytkowników, wiadomości i innych zasobów w bazie danych MySQL.
 - **Wysyłanie i odbieranie plików**: Obsługa załączników, w tym zdjęć, dokumentów i innych plików w czacie.
 
 ## Uwaga!
