@@ -137,13 +137,8 @@ dist
 uploads/**
 uploads/*
 
-# Ignore everything in uploads by default
 uploads/*
-
-# Allow specific files within uploads
 !uploads/profiles/
 !uploads/attachments/
-
-# Then, specify the exact files you want to allow
 !uploads/profiles/default.png
 !uploads/attachments/.gitkeep
