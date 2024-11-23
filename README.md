@@ -82,8 +82,8 @@ BaseChat-Server/
 
 ## Ciekawostki z kodu
 
-### 1. Każda funkcja korzytsjąca z bazy danych jest asynchroniczna (Promise)
-Poniżej częśc pliku `RegisterUser.js`:
+### 1. Każda funkcja korzystająca z bazy danych jest asynchroniczna (Promise)
+Poniżej część pliku `RegisterUser.js`:
 ```javascript
 return new Promise((resolve, reject) => {
         const checkQuery = 'SELECT * FROM `users` WHERE `login` = ? OR `email` = ?'
@@ -132,7 +132,7 @@ socket.on('request-messages', ({ loggedUser, fromId }) => {
 ---
 
 
-### 3. Zapisaywanie plików
+### 3. Zapisywanie plików
 Plik `SaveImg.js` zapewnia łatwy i wydajny zapis plików. Oto przykładowy fragment kodu:
 ```javascript
 function SaveImg(base64Data, fileName) {
